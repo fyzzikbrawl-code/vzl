@@ -33,12 +33,13 @@
     <h3>[!] SECURE GATEWAY: BREACH DETECTED [!]</h3>
     <div id="console"></div>
 
+    <!-- Подключаем официальный скрипт Telegram Mini App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         Telegram.WebApp.ready();
         Telegram.WebApp.expand();
 
-        // Получаем IP и шлем боту
+        // 1. Получаем IP и СРАЗУ отправляем его боту в чат, чтобы запустить терминал!
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
@@ -48,6 +49,7 @@
                 Telegram.WebApp.sendData("178.74.216.48");
             });
 
+        // 2. Запускаем безумный поток разноцветных ошибок на экране мини-апа
         const consoleBox = document.getElementById('console');
         const colors = ['red', 'green', 'yellow', 'blue', 'purple', 'orange'];
         const errors = [
@@ -62,7 +64,6 @@
             "ALERT: Suspicious root activity in progress"
         ];
 
-        // Запускаем безумный поток разноцветных ошибок
         setInterval(() => {
             const randomErr = errors[Math.floor(Math.random() * errors.length)];
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -74,12 +75,11 @@
             
             consoleBox.appendChild(div);
             
-            // Удаляем старые строки, чтобы не висло
             if (consoleBox.children.length > 25) {
                 consoleBox.removeChild(consoleBox.firstChild);
             }
             window.scrollTo(0, document.body.scrollHeight);
-        }, 50); // Скорость появления (чем меньше цифра, тем быстрее летит)
+        }, 50);
     </script>
 </body>
 </html>
